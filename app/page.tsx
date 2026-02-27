@@ -27,7 +27,7 @@ export default function Page() {
     // Format: new Date(year, month-1, day, hour, minute, second)
     // NOTE: month is 0-indexed
     const startTimeStr = localStorage.getItem('startTime')
-    const fixedStartTime = new Date(2026, 1, 24, 22, 48, 0).getTime()
+    const fixedStartTime = new Date(2026, 1, 27, 15, 30, 0).getTime()
 
     // If missing or different from the code-provided fixed start time, update storage.
     // This helps during development when you change the hardcoded start time.
@@ -161,12 +161,12 @@ function getBackgroundImage(theme: string): string {
     // Local images served from the `public/bg/` folder
     // Place your image files in `public/bg/` with these names:
     // default.jpg, breakfast.jpg, lunch.jpg, hiTea.jpg, dinner.jpg, midnightSnacks.jpg, judging.jpg, announcement.jpg
-    default: "url('/bg/hiTea.jpg')",
-    breakfast: "url('/bg/breakfast.jpg')",
-    lunch: "url('/bg/lunch.jpg')",
-    hiTea: "url('/bg/hiTea.jpg')",
-    dinner: "url('/bg/dinner.jpg')",
-    midnightSnacks: "url('/bg/midnightSnacks.jpg')",
+    default: "url('/bg/default.jpeg')",
+    breakfast: "url('/bg/breakfast.jpeg')",
+    lunch: "url('/bg/Lunch2.jpeg')",
+    hiTea: "url('/bg/hiTea.jpeg')",
+    dinner: "url('/bg/Dinner.jpeg')",
+    midnightSnacks: "url('/bg/midnight.jpeg')",
     judging: "url('/bg/judging.jpg')",
     announcement: "url('/bg/announcement.jpg')",
   }

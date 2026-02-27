@@ -139,42 +139,42 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
       </div>
 
       {/* Main countdown card */}
-      <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+      <div className=" rounded-3xl shadow-2xl p-8 md:p-12">
         <div className="flex items-center justify-center gap-6 md:gap-8">
           {/* Hours Box */}
           <div className="flex flex-col items-center gap-4">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
+            <div className="bg-[#1F2A23] rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
               <div className="text-5xl md:text-7xl font-bold text-white">
                 {formatNumber(timeRemaining.hours)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold text-gray-700 tracking-widest">HOURS</p>
+            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">HOURS</p>
           </div>
 
           {/* Separator */}
-          <div className="text-4xl md:text-6xl font-bold text-blue-600 animate-pulse">:</div>
+          <div className="text-4xl md:text-6xl font-bold text-[#0A6522] animate-pulse">:</div>
 
           {/* Minutes Box */}
           <div className="flex flex-col items-center gap-4">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
+            <div className="bg-[#1F2A23]  rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
               <div className="text-5xl md:text-7xl font-bold text-white">
                 {formatNumber(timeRemaining.minutes)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold text-gray-700 tracking-widest">MINUTES</p>
+            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">MINUTES</p>
           </div>
 
           {/* Separator */}
-          <div className="text-4xl md:text-6xl font-bold text-blue-600 animate-pulse">:</div>
+          <div className="text-4xl md:text-6xl font-bold text-[#0A6522] animate-pulse">:</div>
 
           {/* Seconds Box */}
-          <div className="flex flex-col items-center gap-4">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="bg-[#1F2A23] rounded-2xl px-8 md:px-12 py-6 md:py-8 shadow-lg">
               <div className="text-5xl md:text-7xl font-bold text-white">
                 {formatNumber(timeRemaining.seconds)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold text-gray-700 tracking-widest">SECONDS</p>
+            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">SECONDS</p>
           </div>
         </div>
       </div>
