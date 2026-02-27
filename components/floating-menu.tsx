@@ -13,18 +13,12 @@ interface MenuItem {
 
 interface FloatingMenuProps {
   onThemeSelect: (theme: string, message: string) => void
-  onPause: () => void
-  onResume: () => void
   onResetBackground: () => void
-  isPaused?: boolean
 }
 
 export default function FloatingMenu({ 
   onThemeSelect, 
-  onPause, 
-  onResume, 
   onResetBackground,
-  isPaused = false 
 }: FloatingMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,10 +29,6 @@ export default function FloatingMenu({
     { id: 'dinner', label: 'Dinner', emoji: '🍴', message: '🍴 DINNER TIME', action: 'theme' },
     { id: 'midnightSnacks', label: 'Midnight Snacks', emoji: '🌙', message: '🌙 MIDNIGHT SNACKS TIME', action: 'theme' },
     { id: 'judging', label: 'Judging Round', emoji: '🏆', message: '🏆 JUDGING ROUND', action: 'theme' },
-    { id: 'announcement', label: 'Announcement', emoji: '📢', message: '📢 ANNOUNCEMENT', action: 'theme' },
-    isPaused 
-      ? { id: 'resume', label: 'Resume Countdown', emoji: '▶️', action: 'resume' }
-      : { id: 'pause', label: 'Pause Countdown', emoji: '⏸️', action: 'pause' },
     { id: 'reset', label: 'Reset Background', emoji: '🔄', action: 'reset' },
   ]
 
@@ -49,10 +39,6 @@ export default function FloatingMenu({
   const handleMenuItemClick = (item: MenuItem) => {
     if (item.action === 'theme' && item.message) {
       onThemeSelect(item.id, item.message)
-    } else if (item.action === 'pause') {
-      onPause()
-    } else if (item.action === 'resume') {
-      onResume()
     } else if (item.action === 'reset') {
       onResetBackground()
     }
@@ -64,7 +50,11 @@ export default function FloatingMenu({
       {/* Floating Button */}
       <button
         onClick={toggleMenu}
-        className="fixed bottom-8 right-8 z-40 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
+        className="fixed bottom-8 right-8 z-40 w-16 h-16 rounded-full 
+bg-gradient-to-br from-green-900 via-emerald-800 to-black 
+hover:from-green-800 hover:via-emerald-700 hover:to-gray-900 
+text-white shadow-lg transition-all duration-300 flex items-center justify-center 
+hover:scale-110 active:scale-95"
         aria-label="Toggle menu"
       >
         {isOpen ? (

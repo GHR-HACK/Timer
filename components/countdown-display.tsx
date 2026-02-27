@@ -11,10 +11,9 @@ interface TimeRemaining {
 
 interface CountdownDisplayProps {
   onCountdownEnded?: () => void
-  isPaused?: boolean
 }
 
-export default function CountdownDisplay({ onCountdownEnded, isPaused = false }: CountdownDisplayProps) {
+export default function CountdownDisplay({ onCountdownEnded }: CountdownDisplayProps) {
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
     hours: 30,
     minutes: 0,
@@ -60,22 +59,7 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
       setHasStarted(true)
       setIsEnded(false)
 
-      // Account for paused time
-      let pausedDuration = 0
-      const pauseTimeStr = localStorage.getItem('pauseTime')
-      const totalPausedDurationStr = localStorage.getItem('totalPausedDuration')
-
-      if (isPaused && pauseTimeStr) {
-        const pauseTime = parseInt(pauseTimeStr, 10)
-        const currentPausedDuration = now - pauseTime
-        pausedDuration = (parseInt(totalPausedDurationStr || '0', 10)) + currentPausedDuration
-      } else if (totalPausedDurationStr) {
-        pausedDuration = parseInt(totalPausedDurationStr, 10)
-      }
-
-      // Calculate remaining time accounting for paused duration
-      const adjustedEndTime = endTime + pausedDuration
-      const remaining = Math.max(0, adjustedEndTime - now)
+      const remaining = Math.max(0, endTime - now)
 
       if (remaining <= 0) {
         setIsEnded(true)
@@ -110,7 +94,7 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
     const intervalId = window.setInterval(updateCountdown, 1000)
 
     return () => window.clearInterval(intervalId)
-  }, [isPaused, onCountdownEnded])
+  }, [onCountdownEnded])
 
   const formatNumber = (num: number): string => {
     return String(num).padStart(2, '0')
@@ -126,18 +110,8 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
     )
   }
 
-  const startTimeStr = localStorage.getItem('startTime')
-  const startTime = startTimeStr ? parseInt(startTimeStr, 10) : 0
-  const now = Date.now()
-  const isCountingToStart = now < startTime
-
   return (
     <div className="flex flex-col items-center justify-center gap-8">
-      {/* Status indicator */}
-      <div className="text-white text-xl md:text-2xl font-bold">
-        {isCountingToStart ? 'WAITING TO START' : 'HACKATHON RUNNING'}
-      </div>
-
       {/* Main countdown card */}
       <div className=" rounded-3xl shadow-2xl p-8 md:p-12">
         <div className="flex items-center justify-center gap-6 md:gap-8">
@@ -148,7 +122,7 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
                 {formatNumber(timeRemaining.hours)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">HOURS</p>
+            <p className="text-sm md:text-base font-bold tracking-widest text-white">HOURS</p>
           </div>
 
           {/* Separator */}
@@ -161,7 +135,7 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
                 {formatNumber(timeRemaining.minutes)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">MINUTES</p>
+            <p className="text-sm md:text-base font-bold tracking-widest text-white">MINUTES</p>
           </div>
 
           {/* Separator */}
@@ -174,17 +148,11 @@ export default function CountdownDisplay({ onCountdownEnded, isPaused = false }:
                 {formatNumber(timeRemaining.seconds)}
               </div>
             </div>
-            <p className="text-sm md:text-base font-bold tracking-widest bg-gradient-to-r from-orange-500 to-violet-500 bg-clip-text text-transparent">SECONDS</p>
+            <p className="text-sm md:text-base font-bold tracking-widest text-white">SECONDS</p>
           </div>
         </div>
       </div>
 
-      {/* Paused indicator */}
-      {isPaused && (
-        <div className="text-2xl font-bold text-yellow-300 drop-shadow-lg animate-pulse">
-          ⏸️ PAUSED
-        </div>
-      )}
     </div>
   )
 }

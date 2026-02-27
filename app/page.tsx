@@ -9,7 +9,6 @@ import MessageOverlay from '@/components/message-overlay'
 
 export default function Page() {
   const [mounted, setMounted] = useState(false)
-  const [isPaused, setIsPaused] = useState(false)
   const [backgroundTheme, setBackgroundTheme] = useState('default')
   const [displayMessage, setDisplayMessage] = useState<string | null>(null)
 
@@ -27,7 +26,7 @@ export default function Page() {
     // Format: new Date(year, month-1, day, hour, minute, second)
     // NOTE: month is 0-indexed
     const startTimeStr = localStorage.getItem('startTime')
-    const fixedStartTime = new Date(2026, 1, 27, 15, 30, 0).getTime()
+    const fixedStartTime = new Date(2026, 1, 28, 10, 0, 0).getTime()
 
     // If missing or different from the code-provided fixed start time, update storage.
     // This helps during development when you change the hardcoded start time.
@@ -42,42 +41,13 @@ export default function Page() {
       }
     }
 
-    // Check pause state
-    const paused = localStorage.getItem('isPaused')
-    if (paused === 'true') {
-      setIsPaused(true)
-    }
   }, [])
 
-  const handlePauseCounting = () => {
-    localStorage.setItem('isPaused', 'true')
-    localStorage.setItem('pauseTime', String(Date.now()))
-    setIsPaused(true)
-  }
-
-  const handleResumeCounting = () => {
-    const pauseTimeStr = localStorage.getItem('pauseTime')
-    const totalPausedDurationStr = localStorage.getItem('totalPausedDuration')
-
-    if (pauseTimeStr) {
-      const pauseTime = parseInt(pauseTimeStr, 10)
-      const pausedDuration = Date.now() - pauseTime
-      const previousPausedDuration = parseInt(totalPausedDurationStr || '0', 10)
-      const totalPausedDuration = previousPausedDuration + pausedDuration
-
-      localStorage.setItem('totalPausedDuration', String(totalPausedDuration))
-      localStorage.removeItem('pauseTime')
-    }
-
-    localStorage.setItem('isPaused', 'false')
-    setIsPaused(false)
-  }
 
   const handleResetBackground = () => {
     setBackgroundTheme('default')
     localStorage.setItem('hackathon-bg-theme', 'default')
-    setDisplayMessage('Background Reset')
-    setTimeout(() => setDisplayMessage(null), 5000)
+    setDisplayMessage(null) // hide any previous message
     playNotificationSound()
   }
 
@@ -87,7 +57,6 @@ export default function Page() {
 
     if (message) {
       setDisplayMessage(message)
-      setTimeout(() => setDisplayMessage(null), 5000)
     }
 
     playNotificationSound()
@@ -137,7 +106,7 @@ export default function Page() {
       />
 
       <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
-        <CountdownDisplay isPaused={isPaused} />
+        <CountdownDisplay />
         <ProgressBar />
       </div>
 
@@ -145,10 +114,7 @@ export default function Page() {
 
       <FloatingMenu
         onThemeSelect={handleThemeSelect}
-        onPause={handlePauseCounting}
-        onResume={handleResumeCounting}
         onResetBackground={handleResetBackground}
-        isPaused={isPaused}
       />
 
       <FullscreenButton />
@@ -161,14 +127,13 @@ function getBackgroundImage(theme: string): string {
     // Local images served from the `public/bg/` folder
     // Place your image files in `public/bg/` with these names:
     // default.jpg, breakfast.jpg, lunch.jpg, hiTea.jpg, dinner.jpg, midnightSnacks.jpg, judging.jpg, announcement.jpg
-    default: "url('/bg/default.jpeg')",
-    breakfast: "url('/bg/breakfast.jpeg')",
-    lunch: "url('/bg/Lunch2.jpeg')",
-    hiTea: "url('/bg/hiTea.jpeg')",
+    default: "url('/bg/default.png')",
+    breakfast: "url('/bg/Break.png')",
+    lunch: "url('/bg/lunch.png')",
+    hiTea: "url('/bg/tea.png')",
     dinner: "url('/bg/Dinner.jpeg')",
-    midnightSnacks: "url('/bg/midnight.jpeg')",
-    judging: "url('/bg/judging.jpg')",
-    announcement: "url('/bg/announcement.jpg')",
+    midnightSnacks: "url('/bg/midnight.png')",
+    judging: "url('/bg/judge.png')"
   }
 
   return images[theme] || images.default
